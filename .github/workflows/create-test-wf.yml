@@ -66,6 +66,9 @@ jobs:
         with:
           version: ${{ matrix.NXF_VER }}
 
+      - name: install nf-test
+        uses: nf-core/setup-nf-test@v1.1
+
       - name: Run nf-core/tools
         run: |
           mkdir create-test-wf && cd create-test-wf
@@ -75,7 +78,7 @@ jobs:
           pwd
           # echo content of current directory
           ls -la
-          nextflow run nf-core-testpipeline -profile test,self_hosted_runner --outdir ./results
+          cd nf-core-testpipeline && nf-test test --verbose --profile "+self_hosted_runner" --junitxml=../test.xml --tap=../test.tap .
 
       - name: Upload log file artifact
         if: ${{ always() }}

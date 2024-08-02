@@ -1,0 +1,24 @@
+nextflow_pipeline {
+
+    name "Test pipeline with default settings"
+    script "../main.nf"
+    tag  "{{ name }}"
+    tag "PIPELINE"
+
+    test("Default profile test") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+            }
+        }
+
+        then {
+            // TODO nf-core: Add more testing assertions here to make sure your pipeline is valid.
+            // See https://nf-co.re/docs/contributing/nf-test/assertions for guidance.
+            assertAll(
+                { assert workflow.success }
+            )
+        }
+    }
+}
