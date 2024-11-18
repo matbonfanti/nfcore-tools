@@ -1361,10 +1361,11 @@ class DownloadWorkflow:
                         log.debug(f"Task {task} started for {container}")
 
                     # Stream download
+                    log.debug(f"Stream for {container} request is starting")
                     for data in r.iter_content(chunk_size=io.DEFAULT_BUFFER_SIZE):
-                        log.debug(f"Stream for {container} request is going")
                         # Check that the user didn't hit ctrl-c
                         if self.kill_with_fire:
+                            log.debug(f"Killing {container} stream with fire")
                             raise KeyboardInterrupt
                         #progress.update(task, advance=len(data))
                         fh.write(data)
