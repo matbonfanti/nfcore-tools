@@ -1361,7 +1361,7 @@ class DownloadWorkflow:
                         # Check that the user didn't hit ctrl-c
                         if self.kill_with_fire:
                             raise KeyboardInterrupt
-                        progress.update(task, advance=len(data))
+                        #progress.update(task, advance=len(data))
                         fh.write(data)
 
             # Rename partial filename to final filename
