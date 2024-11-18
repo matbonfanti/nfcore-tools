@@ -1349,15 +1349,20 @@ class DownloadWorkflow:
             # Open file handle and download
             with open(output_path_tmp, "wb") as fh:
                 # Disable caching as this breaks streamed downloads
+                log.debug(f"Opened output file, {output_path_tmp}")
                 with requests_cache.disabled():
                     r = requests.get(container, allow_redirects=True, stream=True, timeout=60 * 10)
+                    log.debug(f"Request made for {container}")
                     filesize = r.headers.get("Content-length")
                     if filesize:
+                        log.debug(f"File size of {container} is {filesize}")
                         progress.update(task, total=int(filesize))
                         progress.start_task(task)
+                        log.debug(f"Task {task} started for {container}")
 
                     # Stream download
                     for data in r.iter_content(chunk_size=io.DEFAULT_BUFFER_SIZE):
+                        log.debug(f"Stream for {container} request is going")
                         # Check that the user didn't hit ctrl-c
                         if self.kill_with_fire:
                             raise KeyboardInterrupt
@@ -1366,6 +1371,7 @@ class DownloadWorkflow:
 
             # Rename partial filename to final filename
             os.rename(output_path_tmp, output_path)
+            log.debug(f"{output_path_tmp} renamed to {output_path}")
 
             # Copy cached download if we are using the cache
             if cache_path:
