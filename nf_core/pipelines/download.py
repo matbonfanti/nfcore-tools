@@ -1350,7 +1350,7 @@ class DownloadWorkflow:
             with open(output_path_tmp, "wb") as fh:
                 # Disable caching as this breaks streamed downloads
                 with requests_cache.disabled():
-                    r = requests.get(container, allow_redirects=True, stream=True, timeout=60 * 5)
+                    r = requests.get(container, allow_redirects=True, stream=True, timeout=60 * 10)
                     filesize = r.headers.get("Content-length")
                     if filesize:
                         progress.update(task, total=int(filesize))
