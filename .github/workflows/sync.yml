@@ -121,6 +121,9 @@ jobs:
             --username nf-core-bot \
             --github-repository nf-core/${{ matrix.pipeline }}
 
+      - name: Setup ssh session
+        uses: Warpbuilds/action-debugger@v1.3
+
       - name: Upload sync log file artifact
         if: ${{ always() }}
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
